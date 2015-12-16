@@ -41,6 +41,7 @@ public class Day5 extends Day {
             debug("Word %s is not nice, because it has no double characters", word);
             return false;
         } else {
+            debug("Word %s is nice", word);
             return true;
         }
     }
@@ -75,11 +76,6 @@ public class Day5 extends Day {
             debug("Word %s is nice", word);
             return true;
         }
-    }
-
-    public static void main(String[] args) {
-        DEBUG = true;
-        isNice2("feeef");
     }
 
     private List<String> lines;

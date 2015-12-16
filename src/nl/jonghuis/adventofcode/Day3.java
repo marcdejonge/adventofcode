@@ -1,7 +1,6 @@
 package nl.jonghuis.adventofcode;
 
 import java.io.IOException;
-import java.nio.CharBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +8,8 @@ public class Day3 extends Day {
     private static final int START = 1 << 24 | 1 << 8;
     private static final int VERT = 1 << 16;
 
-    public static int step(int c, int loc) {
-        switch (c) {
+    public static int step(int code, int loc) {
+        switch (code) {
         case '^':
             return loc + VERT;
         case 'v':
@@ -24,15 +23,15 @@ public class Day3 extends Day {
         }
     }
 
-    private char[] input;
+    private String input;
 
     @Override
     public long solvePart1() {
         Set<Integer> locations = new HashSet<>();
-        locations.add(CharBuffer.wrap(input).chars().reduce(START, (r, e) -> {
-            locations.add(r);
-            r = step(e, r);
-            return r;
+        locations.add(input.chars().reduce(START, (currLocation, code) -> {
+            locations.add(currLocation);
+            currLocation = step(code, currLocation);
+            return currLocation;
         }));
         return locations.size();
     }
@@ -44,7 +43,7 @@ public class Day3 extends Day {
         locations.add(START);
 
         int count = 0;
-        for (char c : input) {
+        for (char c : input.toCharArray()) {
             if (count++ % 2 == 0) {
                 santaLocation = step(c, santaLocation);
                 locations.add(santaLocation);
@@ -59,6 +58,6 @@ public class Day3 extends Day {
 
     @Override
     public void solvePrepare() throws IOException {
-        input = readInput().toCharArray();
+        input = readInput();
     }
 }
